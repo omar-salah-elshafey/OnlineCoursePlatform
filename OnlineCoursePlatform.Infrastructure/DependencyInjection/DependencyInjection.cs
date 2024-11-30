@@ -4,8 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using OnlineCoursePlatform.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using OnlineCoursePlatform.Application.Interfaces;
-using OnlineCoursePlatform.Application.Services;
 using OnlineCoursePlatform.Infrastructure.Services;
+using System.Reflection;
+using Microsoft.AspNetCore.Hosting;
+using OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsers;
 
 namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
 {
@@ -21,13 +23,10 @@ namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
             {
                 options.TokenLifespan = TimeSpan.FromMinutes(5); // Set token expiration to .... minutes
             });
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsersQueryHandler).Assembly));
 
-            // Register application services, e.g., AuthService
-            services.AddScoped<IAuthService, AuthService>();
+            // Register application services
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IPasswordManagementService, PasswordManagementService>();
-            services.AddScoped<IUserManagementService, UserManagementService>();
             services.AddScoped<ICookieService, CookieService>();
 
             return services;

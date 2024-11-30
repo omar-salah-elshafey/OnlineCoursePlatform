@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace OnlineCoursePlatform.Application.Interfaces
+﻿namespace OnlineCoursePlatform.Application.Interfaces
 {
     public interface ICookieService
     {
@@ -9,8 +7,7 @@ namespace OnlineCoursePlatform.Application.Interfaces
         void SetUserNameCookie(string userName);
 
         void RemoveFromCookies(string key);
-        //void RemoveRefreshTokenCookie();
-        //void RemoveUserIdCookie();
-        //void RemoveUserNameCookie();
+
+        string GetFromCookies(string key);
     }
 }

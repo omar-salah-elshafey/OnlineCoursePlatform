@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Interfaces;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.ChangePassword;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.ResetPassword;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.ResetPasswordRequest;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.VerifyResetPasswordRequest;
 
 namespace OnlineCoursePlatform.Api.Controllers
 {
@@ -10,10 +14,10 @@ namespace OnlineCoursePlatform.Api.Controllers
     [ApiController]
     public class PasswordManagerController : ControllerBase
     {
-        private readonly IPasswordManagementService _passwordManagementService;
-        public PasswordManagerController(IPasswordManagementService passwordManagementService)
+        private readonly IMediator _mediator;
+        public PasswordManagerController(IMediator mediator)
         {
-            _passwordManagementService = passwordManagementService;
+            _mediator = mediator;
         }
 
         [HttpPut("reset-password")]
@@ -21,7 +25,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _passwordManagementService.ResetPasswordAsync(resetPasswordDto);
+            var result = await _mediator.Send(new ResetPasswordCommand(resetPasswordDto));
             return Ok(result);
         }
 
@@ -31,7 +35,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _passwordManagementService.ChangePasswordAsync(changePasswordDto);
+            var result = await _mediator.Send(new ChangePasswordCommand(changePasswordDto));
             return Ok(result);
         }
 
@@ -40,7 +44,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _passwordManagementService.ResetPasswordRequestAsync(email);
+            var result = await _mediator.Send(new ResetPasswordRequestCommand(email));
             return Ok(result);
         }
 
@@ -50,7 +54,7 @@ namespace OnlineCoursePlatform.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             // Call the service to verify the email
-            var result = await _passwordManagementService.VerifyResetPasswordRequestAsync(confirmEmailDto);
+            var result = await _mediator.Send(new VerifyResetPasswordRequestCommand(confirmEmailDto));
 
             // Check if the verification failed
             if (!result.IsRequestVerified)

@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineCoursePlatform.Application.DTOs;
+using OnlineCoursePlatform.Application.Features.Authentication.Commands.Login;
+using OnlineCoursePlatform.Application.Features.Authentication.Commands.Logout;
+using OnlineCoursePlatform.Application.Features.Authentication.Commands.RegisterUser;
+using OnlineCoursePlatform.Application.Features.TokenManagement.Commands.RefreshtheToken;
 using OnlineCoursePlatform.Application.Interfaces;
 using OnlineCoursePlatform.Domain.Entities;
 
@@ -12,17 +17,15 @@ namespace OnlineCoursePlatform.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
         private readonly UserManager<User> _userManager;
-        private readonly ITokenService _tokenService;
         private readonly ICookieService _cookieService;
-        public AuthController(IAuthService authService, UserManager<User> userManager,
-            ITokenService tokenService, ICookieService cookieService)
+        private readonly IMediator _mediator;
+        public AuthController(UserManager<User> userManager,
+            ICookieService cookieService, IMediator mediator)
         {
-            _authService = authService;
             _userManager = userManager;
-            _tokenService = tokenService;
             _cookieService = cookieService;
+            _mediator = mediator;
         }
 
         [HttpPost("register-student")]
@@ -30,7 +33,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _authService.RegisterUserAsync(registrationDto, "Student");
+            var result = await _mediator.Send(new RegisterUserCommand(registrationDto, "Student"));
 
             if (!result.IsAuthenticated)
                 return Ok(result.Message);
@@ -51,7 +54,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _authService.RegisterUserAsync(registrationDto, "Instructor");
+            var result = await _mediator.Send(new RegisterUserCommand(registrationDto, "Instructor"));
 
             if (!result.IsAuthenticated)
                 return Ok(result.Message);
@@ -73,7 +76,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _authService.RegisterUserAsync(registrationDto, "Admin");
+            var result = await _mediator.Send(new RegisterUserCommand(registrationDto, "Admin"));
 
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
@@ -94,18 +97,10 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _authService.LoginAsync(loginDto);
-            var user = await _userManager.FindByNameAsync(loginDto.EmailOrUserName)
-               ?? await _userManager.FindByEmailAsync(loginDto.EmailOrUserName);
+            var result = await _mediator.Send(new LoginCommand(loginDto));
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
 
-            if (!string.IsNullOrEmpty(result.RefreshToken))
-            {
-                _cookieService.SetRefreshTokenCookie(result.RefreshToken, result.RefreshTokenExpiresOn);
-            }
-            _cookieService.SetUserIdCookie(user.Id);
-            _cookieService.SetUserNameCookie(user.UserName);
             return Ok(new
             {
                 result.AccessToken,
@@ -120,7 +115,7 @@ namespace OnlineCoursePlatform.Api.Controllers
             var refreshToken = Request.Cookies["refreshToken"];
             var userId = Request.Cookies["userID"];
             var userName = Request.Cookies["UserName"];
-            var result = await _authService.LogoutAsync(refreshToken, userId);
+            var result = await _mediator.Send(new LogoutCommand(refreshToken, userId));
             if (!result)
                 return BadRequest(result);
             return Ok("Successfully logged out");
@@ -131,7 +126,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             var refreshToken = Request.Cookies["refreshToken"];
 
-            var result = await _tokenService.RefreshTokenAsync(refreshToken);
+            var result = await _mediator.Send(new RefreshTokenCommand(refreshToken));
 
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);

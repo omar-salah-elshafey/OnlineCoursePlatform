@@ -10,11 +10,9 @@ namespace OnlineCoursePlatform.Api.Controllers
     public class EmailController : ControllerBase
     {
         private readonly IEmailService _emailService;
-        public readonly IAuthService _authService;
-        public EmailController(IEmailService emailService, IAuthService authService)
+        public EmailController(IEmailService emailService)
         {
             _emailService = emailService;
-            _authService = authService;
         }
 
         [HttpPost("confirm-email")]

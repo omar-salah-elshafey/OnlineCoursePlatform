@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Interfaces;
+using OnlineCoursePlatform.Application.Features.UserManagement.Commands.ChangeRole;
+using OnlineCoursePlatform.Application.Features.UserManagement.Commands.DeleteUser;
+using OnlineCoursePlatform.Application.Features.UserManagement.Commands.UpdateUser;
+using OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsers;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Api.Controllers
@@ -13,19 +17,19 @@ namespace OnlineCoursePlatform.Api.Controllers
     public class UserManagementController : ControllerBase
     {
         private readonly UserManager<User> _userManager;
-        private readonly IUserManagementService _userManagementService;
+        private readonly IMediator _mediator;
         public UserManagementController(UserManager<User> userManager,
-            IUserManagementService userManagementService)
+            IMediator mediator)
         {
             _userManager = userManager;
-            _userManagementService = userManagementService;
+            _mediator = mediator;
         }
 
         [HttpGet("get-users")]
         [Authorize]
         public async Task<IActionResult> GetUsersAsync()
         {
-            var users = await _userManagementService.GetUSersAsync();
+            var users = await _mediator.Send(new GetUsersQuery());
             if (users.Count == 0)
                 return NotFound("No users found!");
             return Ok(users);
@@ -37,8 +41,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _userManagementService.ChangeRoleAsync(changeUserRoleDto);
-
+            var result = await _mediator.Send(new ChangeRoleCommand(changeUserRoleDto));
             return Ok(result);
         }
 
@@ -50,7 +53,7 @@ namespace OnlineCoursePlatform.Api.Controllers
             var refreshToken = Request.Cookies["refreshToken"];
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _userManagementService.DeleteUserAsync(UserName, CurrentUserName, refreshToken);
+            var result = await _mediator.Send(new DeleteUserCommand(UserName, CurrentUserName, refreshToken));
             return Ok(result);
         }
 
@@ -60,7 +63,7 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var result = await _userManagementService.UpdateUserAsync(updateUserDto);
+            var result = await _mediator.Send(new UpdateUserCommand(updateUserDto));
             return Ok(result);
         }
     }

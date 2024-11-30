@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OnlineCoursePlatform.Application.Interfaces;
 
-namespace OnlineCoursePlatform.Application.Services
+namespace OnlineCoursePlatform.Infrastructure.Services
 {
     public class CookieService : ICookieService
     {
@@ -55,6 +55,11 @@ namespace OnlineCoursePlatform.Application.Services
                 SameSite = SameSiteMode.Strict
             };
             _httpContextAccessor.HttpContext?.Response.Cookies.Append(key, "", cookieOptions);
+        }
+
+        public string GetFromCookies(string key)
+        {
+            return _httpContextAccessor.HttpContext?.Request.Cookies[key];
         }
     }
 }
