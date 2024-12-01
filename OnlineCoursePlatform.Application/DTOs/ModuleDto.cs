@@ -1,4 +1,4 @@
 ﻿namespace OnlineCoursePlatform.Application.DTOs
 {
-    public record ModuleDto(string Title, string Description, int order);
+    public record ModuleDto(int CourseId, string Title, string Description, int order);
 }

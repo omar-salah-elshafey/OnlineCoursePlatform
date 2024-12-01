@@ -17,6 +17,7 @@ namespace OnlineCoursePlatform.Domain.Entities
 
         public int CourseId { get;  set; }
         public Course Course { get;  set; }
+        public bool IsDeleted {  get; set; }
 
         public List<Lesson>? Lessons { get;  set; } = new List<Lesson>();
     }

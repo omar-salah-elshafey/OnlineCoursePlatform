@@ -13,6 +13,8 @@ namespace OnlineCoursePlatform.Application.Features.CourseFeature.Commands.Updat
         public async Task<CourseResponseModel> Handle(UpdateCourseCommand request, CancellationToken cancellationToken)
         {
             var courseId = request.Id;
+            var currentUserId = request.CurrentUserId;
+            var currentUser =await _userManager.FindByIdAsync(currentUserId);
             var course = await _courseRepository.GetCourseByIdAsync(courseId);
             try
             {
@@ -26,7 +28,13 @@ namespace OnlineCoursePlatform.Application.Features.CourseFeature.Commands.Updat
             {
                 return new CourseResponseModel { Message = ex.Message };
             }
-
+            var instructorID = course.InstructorId;
+            var isAdmin =await _userManager.IsInRoleAsync(currentUser, "Admin");
+            if (!instructorID.Equals(currentUserId) && !isAdmin)
+            {
+                _logger.LogError("You Can't Perform This action!");
+                return new CourseResponseModel { Message = "You Can't Perform This action!" };
+            }
 
             var courseDto = request.updateCourseDto;
             var instructor = await _userManager.FindByIdAsync(courseDto.InstructorId);

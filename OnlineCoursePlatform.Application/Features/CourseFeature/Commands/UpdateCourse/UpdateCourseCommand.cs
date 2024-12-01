@@ -4,5 +4,5 @@ using OnlineCoursePlatform.Application.Models;
 
 namespace OnlineCoursePlatform.Application.Features.CourseFeature.Commands.UpdateCourse
 {
-    public record UpdateCourseCommand(int Id, UpdateCourseDto updateCourseDto) : IRequest<CourseResponseModel>;
+    public record UpdateCourseCommand(int Id, UpdateCourseDto updateCourseDto, string CurrentUserId) : IRequest<CourseResponseModel>;
 }

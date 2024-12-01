@@ -74,25 +74,30 @@ namespace OnlineCoursePlatform.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> UpdateCourse(int id,[FromBody] UpdateCourseDto updateCourseDto)
         {
-            
-            var result = await _mediator.Send(new UpdateCourseCommand(id, updateCourseDto));
+            var CurresntUserId = _cookieService.GetFromCookies("userID");
+            var result = await _mediator.Send(new UpdateCourseCommand(id, updateCourseDto, CurresntUserId));
             if (result.Message is not null)
             {
-                return NotFound(result.Message);  // Course not found
+                return NotFound(result.Message);
             }
 
             return Ok(result);  // Return updated course
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, Instructor")]
         public async Task<IActionResult> DeleteCourse(int id)
         {
-            var result = await _mediator.Send(new DeleteCourseCommand(id));
+            var CurresntUserId = _cookieService.GetFromCookies("userID");
+            var result = await _mediator.Send(new DeleteCourseCommand(id, CurresntUserId));
 
-            if (!result)
-                return NotFound($"Course with ID: {id} is not found."); // Successfully deleted
+            if (result.Message is not null)
+            {
+                return NotFound(result.Message);
+            }
             return Ok(result);
         }
     }

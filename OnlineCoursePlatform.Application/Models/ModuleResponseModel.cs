@@ -7,5 +7,7 @@
         public string Description { get; set; }
         public int Order { get; set; }
         public string CourseName { get; set; }
+
+        public string Message { get; set; }
     }
 }

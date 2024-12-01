@@ -28,6 +28,7 @@ namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsersQueryHandler).Assembly));
             // Register application repositories
             services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IModuleRepository, ModuleRepository>();
 
             // Register application services
             services.AddScoped<IEmailService, EmailService>();
