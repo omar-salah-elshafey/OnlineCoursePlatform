@@ -6,14 +6,14 @@ using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.CreateModule
 {
-    public class CreateModuleCommandHandler(IModuleRepository moduleRepository, ILogger<CreateModuleCommandHandler> logger)
-        : IRequestHandler<CreateModuleCommand, ModuleResponseModel>
+    public class CreateModuleCommandHandler(IModuleRepository moduleRepository, ILogger<CreateModuleCommandHandler> logger, 
+        ICourseRepository courseRepository) : IRequestHandler<CreateModuleCommand, ModuleResponseModel>
     {
         public async Task<ModuleResponseModel> Handle(CreateModuleCommand request, CancellationToken cancellationToken)
         {
             var moduleDto = request.ModuleDto;
             var courseId = moduleDto.CourseId;
-            var course = await moduleRepository.GetModuleByIdAsync(courseId);
+            var course = await courseRepository.GetCourseByIdAsync(courseId);
             if (course is null)
             {
                 logger.LogError("The Course ID is not valid");
@@ -29,6 +29,7 @@ namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.Creat
             
             await moduleRepository.AddModuleAsync(module);
             await moduleRepository.SaveChangesAsync();
+            logger.LogInformation($"Module Created Successfully {Environment.NewLine}Returning Module Details...");
 
             return new ModuleResponseModel
             {

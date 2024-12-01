@@ -24,7 +24,7 @@ namespace OnlineCoursePlatform.Api.Controllers
             _cookieService = cookieService;
         }
 
-        [HttpPost]
+        [HttpPost("add-course")]
         [Authorize(Roles ="Admin, Instructor")]
         public async Task<IActionResult> CreateCourse([FromBody] CourseDto courseDto)
         {
@@ -65,9 +65,9 @@ namespace OnlineCoursePlatform.Api.Controllers
         {
             var course = await _mediator.Send(new GetCourseByIdQuery(id));
 
-            if (course == null)
+            if (course.Message is not null)
             {
-                return NotFound($"Course with ID: {id} is not found."); // Return 404 if course not found
+                return NotFound(course.Message);
             }
 
             return Ok(course); // Return 200 with the course data
@@ -94,7 +94,7 @@ namespace OnlineCoursePlatform.Api.Controllers
             var CurresntUserId = _cookieService.GetFromCookies("userID");
             var result = await _mediator.Send(new DeleteCourseCommand(id, CurresntUserId));
 
-            if (result.Message is not null)
+            if (!result.IsDeleted)
             {
                 return NotFound(result.Message);
             }

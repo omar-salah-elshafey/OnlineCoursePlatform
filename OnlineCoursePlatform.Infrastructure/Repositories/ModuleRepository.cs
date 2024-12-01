@@ -26,12 +26,12 @@ namespace OnlineCoursePlatform.Infrastructure.Repositories
 
         public async Task<List<Module>> GetAllModulesAsync()
         {
-            return await _context.Modules.Where(m => !m.IsDeleted).Include(m => m.Lessons).ToListAsync();
+            return await _context.Modules.Where(m => !m.IsDeleted).Include(m => m.Lessons).Include(m => m.Course).ToListAsync();
         }
 
         public async Task<Module?> GetModuleByIdAsync(int id)
         {
-            return await _context.Modules.Where(m => !m.IsDeleted).Include(m => m.Lessons).FirstOrDefaultAsync(m => id == m.Id);
+            return await _context.Modules.Where(m => !m.IsDeleted).Include(m => m.Lessons).Include(m => m.Course).FirstOrDefaultAsync(m => id == m.Id);
         }
 
         public async Task SaveChangesAsync()

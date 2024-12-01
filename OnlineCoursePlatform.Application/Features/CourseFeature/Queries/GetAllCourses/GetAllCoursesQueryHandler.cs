@@ -27,7 +27,8 @@ namespace OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetAll
                     InstructorName = $"{instructor.FirstName} {instructor.LastName}",
                     InstructorId = instructor.Id,
                     ThumbnailUrl = course.ThumbnailUrl,
-                    Modules = course.Modules.Select(m => new ModuleResponseModel {
+                    Modules = course.Modules.Select(m => new ModuleResponseModel
+                    {
                         Id = m.Id,
                         Title = m.Title,
                         Description = m.Description,

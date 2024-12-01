@@ -16,8 +16,11 @@ namespace OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCou
             var course = await _courseRepository.GetCourseByIdAsync(courseId);
             if (course == null) 
             {
-                _logger.LogError("Course Not Found.");
-                return null;
+                _logger.LogError($"Course with Id: {courseId} is not Found");
+                return new CourseResponseModel
+                {
+                    Message = $"Course with Id: {courseId} is not Found"
+                };
             }
             var instructor = await _userManager.FindByIdAsync(course.InstructorId);
             _logger.LogInformation("Returnig the Course Details...");
