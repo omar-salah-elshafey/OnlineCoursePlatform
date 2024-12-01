@@ -8,6 +8,8 @@ using OnlineCoursePlatform.Infrastructure.Services;
 using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsers;
+using OnlineCoursePlatform.Application.Interfaces.IRepositories;
+using OnlineCoursePlatform.Infrastructure.Repositories;
 
 namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
 {
@@ -24,6 +26,8 @@ namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
                 options.TokenLifespan = TimeSpan.FromMinutes(5); // Set token expiration to .... minutes
             });
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsersQueryHandler).Assembly));
+            // Register application repositories
+            services.AddScoped<ICourseRepository, CourseRepository>();
 
             // Register application services
             services.AddScoped<IEmailService, EmailService>();

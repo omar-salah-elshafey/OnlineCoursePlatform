@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineCoursePlatform.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using OnlineCoursePlatform.Infrastructure.Data;
 namespace OnlineCoursePlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241130215058_AllowNullThumbnailUrl")]
+    partial class AllowNullThumbnailUrl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,9 +205,6 @@ namespace OnlineCoursePlatform.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
 
@@ -246,9 +246,6 @@ namespace OnlineCoursePlatform.Infrastructure.Migrations
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Progress")
                         .HasColumnType("int");
 
@@ -276,9 +273,6 @@ namespace OnlineCoursePlatform.Infrastructure.Migrations
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<int>("ModuleId")
                         .HasColumnType("int");
@@ -420,8 +414,8 @@ namespace OnlineCoursePlatform.Infrastructure.Migrations
                         {
                             Id = "7e53a491-a9de-4c75-af44-ff3271a5176c",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c6d06db1-08c8-4a9f-8786-52f981f1a311",
-                            DateCreated = new DateTime(2024, 12, 1, 10, 38, 56, 228, DateTimeKind.Local).AddTicks(8630),
+                            ConcurrencyStamp = "2b102aeb-be68-4b57-bd8a-0997499ea059",
+                            DateCreated = new DateTime(2024, 11, 30, 23, 50, 57, 182, DateTimeKind.Local).AddTicks(9289),
                             DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "super@admin.com",
                             EmailConfirmed = true,
@@ -432,9 +426,9 @@ namespace OnlineCoursePlatform.Infrastructure.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SUPER@ADMIN.COM",
                             NormalizedUserName = "SUPER_ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAtie4q7+hsFo3NJKqlhvini2qcb/1gUkkLb8CTBNYozFQI1FUKNb4OxkHMAa8G+Gw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFdZvQE5siD+JfN719Tmhw70VhCR4NX68VPZu971r/bbQFRQr/yD9qT/1VdM1Grw3A==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "1f64623f-84fe-4ee3-b4dc-3b0283b99395",
+                            SecurityStamp = "094c723d-ce8a-452e-b63c-a5f6eaa4dc4a",
                             TwoFactorEnabled = false,
                             UserName = "super_admin"
                         });

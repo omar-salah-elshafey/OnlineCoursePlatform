@@ -4,17 +4,19 @@ namespace OnlineCoursePlatform.Domain.Entities
 {
     public class Lesson
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(255)]
-        public string Title { get; private set; }
+        public string Title { get; set; }
+        [Required]
+        public string Content { get; set; } // Could be text, video URL, etc.
 
-        public string Content { get; private set; } // Could be text, video URL, etc.
+        public bool IsDeleted { get; set; } = false;
+        [Required]
+        public int Order { get; set; }
 
-        public int Order { get; private set; }
-
-        public int ModuleId { get; private set; }
-        public Module Module { get; private set; }
+        public int ModuleId { get; set; }
+        public Module Module { get; set; }
     }
 }
