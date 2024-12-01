@@ -26,9 +26,10 @@ namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
                 options.TokenLifespan = TimeSpan.FromMinutes(5); // Set token expiration to .... minutes
             });
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUsersQueryHandler).Assembly));
-            // Register application repositories
+            // Register application repositories 
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IModuleRepository, ModuleRepository>();
+            services.AddScoped<ILessonRepository, LessonRepository>();
 
             // Register application services
             services.AddScoped<IEmailService, EmailService>();

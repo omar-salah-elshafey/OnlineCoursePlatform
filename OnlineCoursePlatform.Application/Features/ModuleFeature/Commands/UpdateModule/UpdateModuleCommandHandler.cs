@@ -46,7 +46,15 @@ namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.Updat
                 Title = module.Title,
                 Description = module.Description,
                 Order = module.Order,
-                CourseName = module.Course.Title
+                CourseName = module.Course.Title,
+                Lessons = module.Lessons.Select(l => new LessonResponseModel
+                {
+                    Id = l.Id,
+                    Title = l.Title,
+                    Content = l.Content,
+                    ModuleName = l.Module.Title,
+                    Order = l.Order
+                }).ToList()
             };
         }
     }

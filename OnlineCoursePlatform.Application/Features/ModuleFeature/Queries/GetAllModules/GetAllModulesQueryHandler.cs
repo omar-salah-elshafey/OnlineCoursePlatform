@@ -16,7 +16,7 @@
                 {
                     logger.LogWarning("No Modules were found.");
                     return new List<ModuleResponseModel>();
-            }
+                }
                 var moduleResponseModel = new List<ModuleResponseModel>();
                 foreach (var module in modules)
                 {
@@ -27,6 +27,14 @@
                         Description = module.Description,
                         Order = module.Order,
                         CourseName = module.Course.Title,
+                        Lessons = module.Lessons.Select(l => new LessonResponseModel
+                        {
+                            Id = l.Id,
+                            Title = l.Title,
+                            Content = l.Content,
+                            ModuleName = l.Module.Title,
+                            Order = l.Order
+                        }).ToList()
 
                     });
                 }

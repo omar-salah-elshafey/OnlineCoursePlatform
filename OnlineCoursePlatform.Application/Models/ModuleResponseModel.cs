@@ -9,5 +9,7 @@
         public string CourseName { get; set; }
 
         public string Message { get; set; }
+
+        public List<LessonResponseModel>? Lessons { get; set; }
     }
 }

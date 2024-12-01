@@ -25,7 +25,15 @@ namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetMod
                 Title = module.Title,
                 Description = module.Description,
                 CourseName = module.Course.Title,
-                Order = module.Order
+                Order = module.Order,
+                Lessons = module.Lessons.Select(l => new LessonResponseModel
+                {
+                    Id = l.Id,
+                    Title = l.Title,
+                    Content = l.Content,
+                    ModuleName = l.Module.Title,
+                    Order = l.Order
+                }).ToList()
             };
         }
     }
