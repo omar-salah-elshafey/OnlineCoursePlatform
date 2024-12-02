@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using OnlineCoursePlatform.Application.Interfaces.IRepositories;
 using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLessonsByModuleId
 {
@@ -27,6 +28,7 @@ namespace OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLes
                 Title = l.Title,
                 Content = l.Content,
                 ModuleName = l.Module.Title,
+                ModuleId = l.ModuleId,
                 Order = l.Order,
             }).ToList();
         }

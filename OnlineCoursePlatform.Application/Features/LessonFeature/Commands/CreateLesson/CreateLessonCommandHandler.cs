@@ -37,6 +37,7 @@ namespace OnlineCoursePlatform.Application.Features.LessonFeature.Commands.Creat
                 Title = lesson.Title,
                 Content = lesson.Content,
                 ModuleName = lesson.Module.Title,
+                ModuleId = lesson.ModuleId,
                 Order = lesson.Order
             };
         }

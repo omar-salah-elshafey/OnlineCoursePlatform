@@ -24,6 +24,7 @@ namespace OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLes
                 Title = lesson.Title,
                 Content = lesson.Content,
                 ModuleName = lesson.Module.Title,
+                ModuleId = lesson.ModuleId,
                 Order = lesson.Order,
             };
         }
