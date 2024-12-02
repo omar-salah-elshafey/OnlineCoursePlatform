@@ -8,6 +8,7 @@ using OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.DeleteMod
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.UpdateModule;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetAllModules;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetModuleById;
+using OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetModulesByCourseId;
 using OnlineCoursePlatform.Application.Interfaces;
 
 namespace OnlineCoursePlatform.Api.Controllers
@@ -45,18 +46,28 @@ namespace OnlineCoursePlatform.Api.Controllers
         public async Task<IActionResult> GetAllModulesAsync()
         {
             var result =await _mediator.Send(new GetAllModuleQuery());
-            if (result is null || !result.Any())
+            if (result is null || result.Count == 0)
                 return NoContent();
             return Ok(result);
         }
 
-        [HttpGet("({id}")]
+        [HttpGet("(get-by-id/{moduleId}")]
         [Authorize]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetModuleByIdAsync(int moduleId)
         {
-            var result = await _mediator.Send( new GetModuleByIdQuery(id));
+            var result = await _mediator.Send( new GetModuleByIdQuery(moduleId));
             if (result.Message != null)
-                return BadRequest(result.Message);
+                return NotFound(result.Message);
+            return Ok(result);
+        }
+
+        [HttpGet("(get-by-moduleId/{courseId}")]
+        [Authorize]
+        public async Task<IActionResult> GetModulesByCourseIdAsync(int courseId)
+        {
+            var result = await _mediator.Send(new GetModulesByCourseIdQuery(courseId));
+            if (result is null || result.Count == 0)
+                return NoContent();
             return Ok(result);
         }
 

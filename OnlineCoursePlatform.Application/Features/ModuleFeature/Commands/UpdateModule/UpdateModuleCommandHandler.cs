@@ -29,16 +29,9 @@ namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.Updat
                 return new ModuleResponseModel { Message = "You are not authorized to Update this Module." };
             }
             var moduleDto = request.UpdateModuleDto;
-            var courseExists = await courseRepository.GetCourseByIdAsync(moduleDto.CourseId);
-            if (courseExists == null)
-            {
-                logger.LogError("Course Id isn't correct. No Course Exist having this id.");
-                return new ModuleResponseModel { Message = "Course Id isn't correct. No Course Exist having this id." };
-            }
             module.Title = moduleDto.Title;
             module.Description = moduleDto.Description;
             module.Order = moduleDto.Order;
-            module.CourseId = moduleDto.CourseId;
             await moduleRepository.SaveChangesAsync();
             return new ModuleResponseModel
             {
@@ -47,12 +40,14 @@ namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.Updat
                 Description = module.Description,
                 Order = module.Order,
                 CourseName = module.Course.Title,
+                CourseId = module.CourseId,
                 Lessons = module.Lessons.Select(l => new LessonResponseModel
                 {
                     Id = l.Id,
                     Title = l.Title,
                     Content = l.Content,
                     ModuleName = l.Module.Title,
+                    ModuleId = l.ModuleId,
                     Order = l.Order
                 }).ToList()
             };

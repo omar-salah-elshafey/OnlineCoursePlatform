@@ -27,12 +27,14 @@
                         Description = module.Description,
                         Order = module.Order,
                         CourseName = module.Course.Title,
+                        CourseId = module.CourseId,
                         Lessons = module.Lessons.Select(l => new LessonResponseModel
                         {
                             Id = l.Id,
                             Title = l.Title,
                             Content = l.Content,
                             ModuleName = l.Module.Title,
+                            ModuleId = l.ModuleId,
                             Order = l.Order
                         }).ToList()
 

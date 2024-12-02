@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public int Order { get; set; }
         public string CourseName { get; set; }
-
+        public int CourseId { get; set; }
         public string Message { get; set; }
 
         public List<LessonResponseModel>? Lessons { get; set; }
