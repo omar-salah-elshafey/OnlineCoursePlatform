@@ -39,6 +39,15 @@ namespace OnlineCoursePlatform.Infrastructure.Repositories
                 .FirstOrDefaultAsync(l => l.Id == id);
         }
 
+        public async Task<List<Lesson>> GetLessonsByModuleIdAsync(int moduleId)
+        {
+            return await _context.Lessons
+                .Where(l => !l.IsDeleted && l.ModuleId == moduleId && !l.Module.IsDeleted)
+                .Include(l => l.Module)
+                .ToListAsync();
+        }
+
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

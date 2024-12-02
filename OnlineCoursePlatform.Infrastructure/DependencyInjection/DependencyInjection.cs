@@ -5,8 +5,6 @@ using OnlineCoursePlatform.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using OnlineCoursePlatform.Application.Interfaces;
 using OnlineCoursePlatform.Infrastructure.Services;
-using System.Reflection;
-using Microsoft.AspNetCore.Hosting;
 using OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsers;
 using OnlineCoursePlatform.Application.Interfaces.IRepositories;
 using OnlineCoursePlatform.Infrastructure.Repositories;
@@ -30,6 +28,7 @@ namespace OnlineCoursePlatform.Infrastructure.DependencyInjection
             services.AddScoped<ICourseRepository, CourseRepository>();
             services.AddScoped<IModuleRepository, ModuleRepository>();
             services.AddScoped<ILessonRepository, LessonRepository>();
+            services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
 
             // Register application services
             services.AddScoped<IEmailService, EmailService>();

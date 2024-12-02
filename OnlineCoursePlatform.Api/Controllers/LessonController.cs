@@ -8,6 +8,7 @@ using OnlineCoursePlatform.Application.Features.LessonFeature.Commands.DeleteLes
 using OnlineCoursePlatform.Application.Features.LessonFeature.Commands.UpdateLesson;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetAllLessons;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLessonById;
+using OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLessonsByModuleId;
 using OnlineCoursePlatform.Application.Interfaces;
 
 namespace OnlineCoursePlatform.Api.Controllers
@@ -36,18 +37,6 @@ namespace OnlineCoursePlatform.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")]
-        [Authorize]
-        public async Task<IActionResult> GetLessonByIdAsync(int id)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var result = await _mediator.Send(new GetLessonByIdQuery(id));
-            if (result.Message is not null)
-                return BadRequest(result.Message);
-            return Ok(result);
-        }
-
         [HttpGet("get-all")]
         [Authorize]
         public async Task<IActionResult> GetAllLessonsAsync()
@@ -55,8 +44,32 @@ namespace OnlineCoursePlatform.Api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _mediator.Send(new GetAllLessonsQuery());
-            if (result==null || !result.Any())
-                return BadRequest(result);
+            if (result == null || result.Count == 0)
+                return NoContent();
+            return Ok(result);
+        }
+
+        [HttpGet("get-by-lessonId/{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetLessonByIdAsync(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _mediator.Send(new GetLessonByIdQuery(id));
+            if (result.Message is not null)
+                return NotFound(result.Message);
+            return Ok(result);
+        }
+
+        [HttpGet("get-by-moduleId/{moduleId}")]
+        [Authorize]
+        public async Task<IActionResult> GetLessonsByModuleIdAsync(int moduleId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _mediator.Send(new GetLessonsByModuleIdQuery(moduleId));
+            if (result == null || result.Count == 0)
+                return NoContent();
             return Ok(result);
         }
 
@@ -80,7 +93,7 @@ namespace OnlineCoursePlatform.Api.Controllers
                 return BadRequest(ModelState);
             var result = await _mediator.Send(new DeleteLessonCommand(id));
             if (!result.IsDeleted)
-                return NotFound(result);
+                return BadRequest(result);
             return Ok(result);
         }
     }
