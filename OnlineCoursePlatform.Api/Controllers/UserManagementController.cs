@@ -8,6 +8,8 @@ using OnlineCoursePlatform.Application.Features.UserManagement.Commands.ChangeRo
 using OnlineCoursePlatform.Application.Features.UserManagement.Commands.DeleteUser;
 using OnlineCoursePlatform.Application.Features.UserManagement.Commands.UpdateUser;
 using OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsers;
+using OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsersByRole;
+using OnlineCoursePlatform.Application.Features.UserManagement.Queries.SearchUsersByName;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Api.Controllers
@@ -25,13 +27,43 @@ namespace OnlineCoursePlatform.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("get-users")]
+        [HttpGet("get-all-users")]
         [Authorize]
-        public async Task<IActionResult> GetUsersAsync()
+        public async Task<IActionResult> GetAllUsersAsync()
         {
             var users = await _mediator.Send(new GetUsersQuery());
             if (users.Count == 0)
                 return NotFound("No users found!");
+            return Ok(users);
+        }
+
+        [HttpGet("get-all-students")]
+        [Authorize]
+        public async Task<IActionResult> GetAllStudentsAsync()
+        {
+            var users = await _mediator.Send(new GetUsersByRoleQuery("Student"));
+            if (users.Count == 0)
+                return NotFound("No users found with role: Student");
+            return Ok(users);
+        }
+
+        [HttpGet("get-all-instructors")]
+        [Authorize]
+        public async Task<IActionResult> GetAllInstructorsAsync()
+        {
+            var users = await _mediator.Send(new GetUsersByRoleQuery("Instructor"));
+            if (users.Count == 0)
+                return NotFound("No users found with role: Instructor");
+            return Ok(users);
+        }
+
+        [HttpGet("search-users-by-name")]
+        [Authorize]
+        public async Task<IActionResult> SearchUsersByNameAsync([FromQuery] string keyword)
+        {
+            var users = await _mediator.Send(new SearchUsersByNameQuery(keyword));
+            if (users.Count == 0)
+                return NotFound($"No users found with keyword: {keyword}");
             return Ok(users);
         }
 
