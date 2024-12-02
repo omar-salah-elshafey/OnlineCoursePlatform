@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.UserManagement.Dtos;
 
 namespace OnlineCoursePlatform.Application.Features.UserManagement.Commands.UpdateUser
 {

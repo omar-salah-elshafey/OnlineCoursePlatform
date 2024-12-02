@@ -1,4 +1,4 @@
-﻿namespace OnlineCoursePlatform.Application.Models
+﻿namespace OnlineCoursePlatform.Application.Features.LessonFeature.Dtos
 {
     public class LessonResponseModel
     {

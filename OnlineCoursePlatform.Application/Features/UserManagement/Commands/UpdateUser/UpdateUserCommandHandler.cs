@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using OnlineCoursePlatform.Application.Features.UserManagement.Dtos;
 using OnlineCoursePlatform.Application.Interfaces;
-using OnlineCoursePlatform.Application.Models;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Application.Features.UserManagement.Commands.UpdateUser

@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnlineCoursePlatform.Application.DTOs;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.CreateModule;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.DeleteModule;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Commands.UpdateModule;
+using OnlineCoursePlatform.Application.Features.ModuleFeature.Dtos;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetAllModules;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetModuleById;
 using OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetModulesByCourseId;

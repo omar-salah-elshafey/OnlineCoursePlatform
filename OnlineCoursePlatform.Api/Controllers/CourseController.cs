@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OnlineCoursePlatform.Application.DTOs;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Commands.CreateCourse;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Commands.DeleteCourse;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Commands.UpdateCourse;
+using OnlineCoursePlatform.Application.Features.CourseFeature.Dtos;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetAllCourses;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCourseById;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCoursesByInstructorId;

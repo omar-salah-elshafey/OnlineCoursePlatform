@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.UserManagement.Dtos;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Application.Features.UserManagement.Queries.GetUsersByRole

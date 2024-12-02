@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using OnlineCoursePlatform.Application.Features.CourseFeature.Dtos;
 using OnlineCoursePlatform.Application.Interfaces.IRepositories;
-using OnlineCoursePlatform.Application.Models;
 
 namespace OnlineCoursePlatform.Application.Features.CourseFeature.Queries.SearchCoursesByName
 {

@@ -1,4 +1,4 @@
-﻿namespace OnlineCoursePlatform.Application.Models
+﻿namespace OnlineCoursePlatform.Application.Features.Authentication.Dtos
 {
     public class AuthResponseModel
     {

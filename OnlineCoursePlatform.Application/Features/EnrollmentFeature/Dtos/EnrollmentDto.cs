@@ -1,4 +1,4 @@
-﻿namespace OnlineCoursePlatform.Application.DTOs
+﻿namespace OnlineCoursePlatform.Application.Features.EnrollmentFeature.Dtos
 {
     public class EnrollmentDto
     {

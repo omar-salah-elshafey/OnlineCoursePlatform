@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.CourseFeature.Dtos;
 
 namespace OnlineCoursePlatform.Application.Features.CourseFeature.Commands.UpdateCourse
 {

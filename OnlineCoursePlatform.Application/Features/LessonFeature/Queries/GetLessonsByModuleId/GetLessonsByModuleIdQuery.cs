@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.LessonFeature.Dtos;
 
 namespace OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLessonsByModuleId
 {

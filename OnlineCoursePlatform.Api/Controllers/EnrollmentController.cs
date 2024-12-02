@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnlineCoursePlatform.Application.DTOs;
 using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Commands.CreateEnrollment;
 using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Commands.DeleteEnrollment;
 using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Commands.UpdateEnrollment;
+using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Dtos;
 using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Queries.GetAllEnrollments;
 using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Queries.GetEnrollmentById;
 using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Queries.GetEnrollmentsByCourseId;

@@ -1,5 +1,4 @@
-﻿using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Models;
+﻿using OnlineCoursePlatform.Application.Features.Authentication.Dtos;
 
 namespace OnlineCoursePlatform.Application.Interfaces
 {

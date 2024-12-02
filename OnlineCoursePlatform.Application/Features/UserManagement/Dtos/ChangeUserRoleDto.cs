@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnlineCoursePlatform.Application.DTOs
+namespace OnlineCoursePlatform.Application.Features.UserManagement.Dtos
 {
     public class ChangeUserRoleDto
     {

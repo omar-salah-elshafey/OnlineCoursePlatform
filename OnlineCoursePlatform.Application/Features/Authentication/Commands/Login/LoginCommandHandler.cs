@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using OnlineCoursePlatform.Application.Features.Authentication.Commands.RegisterUser;
+using OnlineCoursePlatform.Application.Features.Authentication.Dtos;
 using OnlineCoursePlatform.Application.Features.TokenManagement.Commands.CreateToken;
 using OnlineCoursePlatform.Application.Features.TokenManagement.Commands.GenerateRefreshToken;
 using OnlineCoursePlatform.Application.Interfaces;
-using OnlineCoursePlatform.Application.Models;
 using OnlineCoursePlatform.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 

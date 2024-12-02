@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Dtos;
 
 namespace OnlineCoursePlatform.Application.Features.EnrollmentFeature.Queries.GetAllEnrollments
 {

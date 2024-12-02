@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OnlineCoursePlatform.Application.DTOs;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Commands.CreateLesson;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Commands.DeleteLesson;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Commands.UpdateLesson;
+using OnlineCoursePlatform.Application.Features.LessonFeature.Dtos;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetAllLessons;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLessonById;
 using OnlineCoursePlatform.Application.Features.LessonFeature.Queries.GetLessonsByModuleId;

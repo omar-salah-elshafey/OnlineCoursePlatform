@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Dtos;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.VerifyResetPasswordRequest

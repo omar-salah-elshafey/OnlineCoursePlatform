@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using OnlineCoursePlatform.Application.Features.EnrollmentFeature.Dtos;
 using OnlineCoursePlatform.Application.Interfaces.IRepositories;
-using OnlineCoursePlatform.Application.Models;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Application.Features.EnrollmentFeature.Queries.GetAllEnrollments

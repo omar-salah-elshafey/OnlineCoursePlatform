@@ -1,4 +1,6 @@
-﻿namespace OnlineCoursePlatform.Application.Models
+﻿using OnlineCoursePlatform.Application.Features.ModuleFeature.Dtos;
+
+namespace OnlineCoursePlatform.Application.Features.CourseFeature.Dtos
 {
     public class CourseResponseModel
     {

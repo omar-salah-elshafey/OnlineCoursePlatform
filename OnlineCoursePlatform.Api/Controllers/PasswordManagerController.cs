@@ -7,6 +7,7 @@ using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.Chan
 using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.ResetPassword;
 using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.ResetPasswordRequest;
 using OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.VerifyResetPasswordRequest;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Dtos;
 
 namespace OnlineCoursePlatform.Api.Controllers
 {

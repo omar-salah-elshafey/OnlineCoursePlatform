@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using OnlineCoursePlatform.Application.DTOs;
+using OnlineCoursePlatform.Application.Features.Authentication.Dtos;
 using OnlineCoursePlatform.Application.Interfaces;
-using OnlineCoursePlatform.Application.Models;
 using OnlineCoursePlatform.Domain.Entities;
 
 namespace OnlineCoursePlatform.Infrastructure.Services

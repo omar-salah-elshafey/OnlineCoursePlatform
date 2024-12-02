@@ -1,11 +1,12 @@
-﻿    using MediatR;
-    using Microsoft.Extensions.Logging;
-    using OnlineCoursePlatform.Application.Interfaces.IRepositories;
-    using OnlineCoursePlatform.Application.Models;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using OnlineCoursePlatform.Application.Features.LessonFeature.Dtos;
+using OnlineCoursePlatform.Application.Features.ModuleFeature.Dtos;
+using OnlineCoursePlatform.Application.Interfaces.IRepositories;
 
-    namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetAllModules
-    {
-        public class GetAllModulesQueryHandler(IModuleRepository moduleRepository, ILogger<GetAllModulesQueryHandler> logger) 
+namespace OnlineCoursePlatform.Application.Features.ModuleFeature.Queries.GetAllModules
+{
+    public class GetAllModulesQueryHandler(IModuleRepository moduleRepository, ILogger<GetAllModulesQueryHandler> logger) 
             : IRequestHandler<GetAllModuleQuery, List<ModuleResponseModel>>
         {
 

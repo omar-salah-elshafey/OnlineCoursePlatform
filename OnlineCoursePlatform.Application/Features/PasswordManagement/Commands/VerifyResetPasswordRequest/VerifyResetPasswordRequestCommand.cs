@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using OnlineCoursePlatform.Application.DTOs;
-using OnlineCoursePlatform.Application.Models;
+using OnlineCoursePlatform.Application.Features.PasswordManagement.Dtos;
 
 namespace OnlineCoursePlatform.Application.Features.PasswordManagement.Commands.VerifyResetPasswordRequest
 {
