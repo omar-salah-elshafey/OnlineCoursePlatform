@@ -7,6 +7,7 @@ using OnlineCoursePlatform.Application.Features.CourseFeature.Commands.DeleteCou
 using OnlineCoursePlatform.Application.Features.CourseFeature.Commands.UpdateCourse;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetAllCourses;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCourseById;
+using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCoursesByInstructorId;
 using OnlineCoursePlatform.Application.Interfaces;
 
 namespace OnlineCoursePlatform.Api.Controllers
@@ -26,42 +27,40 @@ namespace OnlineCoursePlatform.Api.Controllers
 
         [HttpPost("add-course")]
         [Authorize(Roles ="Admin, Instructor")]
-        public async Task<IActionResult> CreateCourse([FromBody] CourseDto courseDto)
+        public async Task<IActionResult> CreateCourseAsync([FromBody] CourseDto courseDto)
         {
-            // Validate the courseDto first if needed
             if (courseDto == null)
             {
                 return BadRequest("Course data is required.");
             }
             var userId = _cookieService.GetFromCookies("userID");
-            // Send the command to create the course
             var result = await _mediator.Send(new CreateCourseCommand(courseDto, userId));
 
             if (result.Message is not null)
             {
-                return NotFound(result.Message);  // Course not found
+                return BadRequest(result.Message);
             }
 
-            return Ok(result); // Return 201 Created with course details
+            return Ok(result);
         }
 
         [HttpGet("get-all")]
         [Authorize]
-        public async Task<IActionResult> GetAllCourses()
+        public async Task<IActionResult> GetAllCoursesAsync()
         {
             var courses = await _mediator.Send(new GetAllCoursesQuery());
 
             if (courses == null || courses.Count == 0)
             {
-                return NoContent(); // Return 204 if no courses found
+                return NoContent();
             }
 
-            return Ok(courses); // Return 200 with the list of courses
+            return Ok(courses);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("get-by-courseId/{id}")]
         [Authorize]
-        public async Task<IActionResult> GetCourseById(int id)
+        public async Task<IActionResult> GetCourseByIdAsync(int id)
         {
             var course = await _mediator.Send(new GetCourseByIdQuery(id));
 
@@ -70,7 +69,21 @@ namespace OnlineCoursePlatform.Api.Controllers
                 return NotFound(course.Message);
             }
 
-            return Ok(course); // Return 200 with the course data
+            return Ok(course);
+        }
+
+        [HttpGet("get-by-instructorId/{instructorId}")]
+        [Authorize]
+        public async Task<IActionResult> GetCoursesByInstructorIdAsync(string instructorId)
+        {
+            var courses = await _mediator.Send(new GetCoursesByInstructorIdQuery(instructorId));
+
+            if (courses == null || courses.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(courses);
         }
 
         [HttpPut("{id}")]
@@ -81,10 +94,10 @@ namespace OnlineCoursePlatform.Api.Controllers
             var result = await _mediator.Send(new UpdateCourseCommand(id, updateCourseDto, CurresntUserId));
             if (result.Message is not null)
             {
-                return NotFound(result.Message);
+                return BadRequest(result.Message);
             }
 
-            return Ok(result);  // Return updated course
+            return Ok(result);
         }
 
         [HttpDelete("{id}")]
@@ -96,7 +109,7 @@ namespace OnlineCoursePlatform.Api.Controllers
 
             if (!result.IsDeleted)
             {
-                return NotFound(result.Message);
+                return BadRequest(result.Message);
             }
             return Ok(result);
         }

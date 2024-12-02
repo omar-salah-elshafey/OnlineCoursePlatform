@@ -24,6 +24,14 @@ namespace OnlineCoursePlatform.Infrastructure.Repositories
             var courses = await _context.Courses.Where(c => !c.IsDeleted).Include(c => c.Modules).Include(c => c.Instructor).ToListAsync();
             return courses;
         }
+        public async Task<List<Course>> GetCoursesByInstructorIdAsync(string instructorId)
+        {
+            return await _context.Courses
+                .Include(c => c.Modules)
+                .Include(c => c.Instructor)
+                .Where(c => !c.IsDeleted && c.InstructorId == instructorId)
+                .ToListAsync();
+        }
         public async Task AddCourseAsync(Course course)
         {
             await _context.Courses.AddAsync(course);
