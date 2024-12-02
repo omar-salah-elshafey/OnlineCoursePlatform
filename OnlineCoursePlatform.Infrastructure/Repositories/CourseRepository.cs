@@ -14,15 +14,20 @@ namespace OnlineCoursePlatform.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Course?> GetCourseByIdAsync(int id)
+        public async Task AddCourseAsync(Course course)
         {
-            return await _context.Courses.Where(c=> !c.IsDeleted).Include(c => c.Modules).Include(c => c.Instructor).FirstOrDefaultAsync(c => c.Id == id);
+            await _context.Courses.AddAsync(course);
         }
 
         public async Task<List<Course>> GetAllCoursesAsync()
         {
             var courses = await _context.Courses.Where(c => !c.IsDeleted).Include(c => c.Modules).Include(c => c.Instructor).ToListAsync();
             return courses;
+        }
+
+        public async Task<Course?> GetCourseByIdAsync(int id)
+        {
+            return await _context.Courses.Where(c=> !c.IsDeleted).Include(c => c.Modules).Include(c => c.Instructor).FirstOrDefaultAsync(c => c.Id == id);
         }
         public async Task<List<Course>> GetCoursesByInstructorIdAsync(string instructorId)
         {
@@ -32,20 +37,25 @@ namespace OnlineCoursePlatform.Infrastructure.Repositories
                 .Where(c => !c.IsDeleted && c.InstructorId == instructorId)
                 .ToListAsync();
         }
-        public async Task AddCourseAsync(Course course)
-        {
-            await _context.Courses.AddAsync(course);
-        }
 
-        public async Task SaveChangesAsync()
+        public async Task<List<Course>> SearchCoursesByNameAsync(string keyword)
         {
-            await _context.SaveChangesAsync();
+            return await _context.Courses
+                .Where(c => !c.IsDeleted && c.Title.ToLower().Contains(keyword.ToLower()))
+                .Include(c => c.Modules)
+                .Include(c => c.Instructor)
+                .ToListAsync();
         }
 
         public async Task DeleteCourseAsync(Course course)
         {
             course.IsDeleted = true;
-             _context.SaveChanges();
+            _context.SaveChanges();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -8,6 +8,7 @@ using OnlineCoursePlatform.Application.Features.CourseFeature.Commands.UpdateCou
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetAllCourses;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCourseById;
 using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.GetCoursesByInstructorId;
+using OnlineCoursePlatform.Application.Features.CourseFeature.Queries.SearchCoursesByName;
 using OnlineCoursePlatform.Application.Interfaces;
 
 namespace OnlineCoursePlatform.Api.Controllers
@@ -85,6 +86,18 @@ namespace OnlineCoursePlatform.Api.Controllers
 
             return Ok(courses);
         }
+
+        [HttpGet("search")]
+        [Authorize]
+        public async Task<IActionResult> SearchCourses([FromQuery] string keyword)
+        {
+            var courses = await _mediator.Send(new SearchCoursesByNameQuery(keyword));
+            if (courses.Count == 0)
+                return NotFound(new { Message = "No courses found matching the search term." });
+
+            return Ok(courses);
+        }
+
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, Instructor")]

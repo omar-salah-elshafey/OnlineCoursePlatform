@@ -7,7 +7,7 @@ namespace OnlineCoursePlatform.Application.Interfaces.IRepositories
         Task<Course?> GetCourseByIdAsync(int id);
         Task<List<Course>> GetAllCoursesAsync();
         Task<List<Course>> GetCoursesByInstructorIdAsync(string instructorId);
-
+        Task<List<Course>> SearchCoursesByNameAsync(string keyword);
         Task AddCourseAsync(Course course);
         Task DeleteCourseAsync(Course course);
         Task SaveChangesAsync();
